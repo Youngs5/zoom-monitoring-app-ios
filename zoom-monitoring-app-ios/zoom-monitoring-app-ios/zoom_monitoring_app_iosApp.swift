@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct zoom_monitoring_app_iosApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let networkService = DefaultNetworkService()
+            let userRepository = DefaultUserRepository(networkService: networkService)
+            let signInUseCase = DefaultSignInUserUseCase(userRepository: userRepository)
+            let signInViewModel = SignInViewModel(signInUserUseCase: signInUseCase)
+            
+            SignInView(viewModel: signInViewModel)
         }
     }
 }
